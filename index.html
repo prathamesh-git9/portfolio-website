@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prathamesh Kalamkar — Agent correctness and evaluation integrity</title>
+<meta name="description" content="Prathamesh Kalamkar builds the correctness layer underneath tool-calling AI systems and measures the security oracles used to evaluate AI-generated code. Public, reproducible research artifacts — no peer-reviewed publications.">
+<meta name="author" content="Prathamesh Kalamkar">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1113" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://prathamesh-git9.github.io/portfolio-website/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prathamesh Kalamkar — Agent correctness and evaluation integrity">
+<meta property="og:description" content="Execution-grounded audits of security oracles, and correctness infrastructure for tool-calling AI systems. Public, reproducible artifacts — no peer-reviewed publications.">
+<meta property="og:url" content="https://prathamesh-git9.github.io/portfolio-website/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Applied before first paint so an explicit theme choice does not flash.
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="#top">
+      <span class="wordmark__mark" aria-hidden="true">§</span>
+      <span class="wordmark__text">
+        <b>Prathamesh Kalamkar</b>
+        <span>Agent correctness &amp; evaluation integrity</span>
+      </span>
+    </a>
+    <button type="button" id="theme-toggle" class="theme-toggle" hidden aria-pressed="false">
+      <span class="theme-toggle__icon" aria-hidden="true"></span>
+      <span class="theme-toggle__label">Theme</span>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="rail">
+    <nav class="toc" aria-label="Page sections">
+      <p class="toc__title" id="toc-title">Contents</p>
+      <ol aria-labelledby="toc-title">
+        <li><a href="#focus"><span class="toc__num">01</span> Research focus</a></li>
+        <li><a href="#evidence"><span class="toc__num">02</span> Evidence</a></li>
+        <li><a href="#artifacts"><span class="toc__num">03</span> Research artifacts</a></li>
+        <li><a href="#work"><span class="toc__num">04</span> Selected work</a></li>
+        <li><a href="#method"><span class="toc__num">05</span> How I work</a></li>
+        <li><a href="#background"><span class="toc__num">06</span> Background</a></li>
+        <li><a href="#contact"><span class="toc__num">07</span> Contact</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <main id="main">
+
+    <!-- ───────────────────────── hero ───────────────────────── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <p class="eyebrow">Dublin, Ireland</p>
+      <h1 id="hero-heading">
+        I build the correctness layer underneath tool-calling AI systems — and I
+        measure the instruments the field uses to judge them.
+      </h1>
+      <p class="lead">
+        A more capable model does not fix idempotency, determinism, crash recovery,
+        authority boundaries, or honest uncertainty. When a tool call times out, the
+        local journal cannot distinguish <em>the request never arrived</em> from
+        <em>the request committed and the acknowledgement was lost</em> — no amount of
+        reasoning recovers that bit. So the work below shares one design signature:
+        when the truth is not knowable, the system records an explicit unknown and
+        stops at a human gate instead of guessing well.
+      </p>
+      <p class="lead">
+        The same instinct points at evaluation. A benchmark that reports “this model
+        writes secure code 62% of the time” is reporting what a checker said 62% of
+        the time. My current research measures how much of that verdict is a property
+        of the code and how much is a property of the checker.
+      </p>
+
+      <ul class="idlinks">
+        <li><a href="mailto:prathemesh7744@gmail.com">prathemesh7744@gmail.com</a></li>
+        <li><a href="https://github.com/prathamesh-git9" rel="me noopener">github.com/prathamesh-git9</a></li>
+        <li><a href="https://www.linkedin.com/in/prathamesh-kalamkar/" rel="me noopener">linkedin.com/in/prathamesh-kalamkar</a></li>
+      </ul>
+
+      <div class="disclosure" role="note">
+        <p class="disclosure__title">What this page does not claim</p>
+        <p>
+          I have <strong>no publications, preprints, or peer-reviewed papers</strong>, and
+          no ORCID or Google Scholar record yet. Everything described below is public
+          code and reproducible research artifacts. Where a number appears, it was
+          produced by a command in the repository that reports it, and the caveat that
+          repository states is repeated here rather than dropped.
+        </p>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 01 focus ───────────────────────── -->
+    <section id="focus" aria-labelledby="focus-heading">
+      <h2 id="focus-heading"><span class="sec-num">01</span> Research focus</h2>
+      <p class="section-intro">
+        Three threads, in the order I currently spend time on them. All three are
+        about the same question: what does a system know, and what is it only
+        assuming?
+      </p>
+
+      <div class="grid grid--3">
+        <article class="card">
+          <h3>Evaluation-oracle integrity</h3>
+          <p>
+            Most reported “security of AI-generated code” is scored by static,
+            single-CWE, function-level checkers. If those checkers respond to the
+            <em>form</em> of the code rather than its behaviour, then any intervention
+            that shifts style can move the score without moving the security. I build
+            corpora whose labels are earned by <strong>running an exploit</strong>, and
+            score the checkers against them.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Secure-coding instructions for coding agents</h3>
+          <p>
+            If an identical secure-coding sentence is placed in the task prompt, the
+            repository context, both, or neither, does the agent’s output change — in
+            security <em>and</em> in functional correctness? A 2&nbsp;×&nbsp;2 factorial
+            design, pre-registered in public before holdout outputs were generated, with development
+            tasks permanently separated from an untouched holdout.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Correctness and authority for agent side effects</h3>
+          <p>
+            Retries turn one intended charge, refund, or production change into
+            several. I build the boundary that stops that: stable intent, one
+            downstream idempotency key across every attempt, authoritative
+            reconciliation, and an explicit <code>outcome_unknown</code> that stops for
+            a human instead of faking exactly-once.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 02 evidence ───────────────────────── -->
+    <section id="evidence" aria-labelledby="evidence-heading">
+      <h2 id="evidence-heading"><span class="sec-num">02</span> Evidence</h2>
+      <p class="section-intro">
+        Numbers that came out of a command, with the conditions under which they were
+        produced. Each table names the repository and file it is drawn from.
+      </p>
+
+      <figure class="figure" data-source="security-oracle-discrimination — results/REPORT.md, RESEARCH.md §4.1">
+        <figcaption>
+          <span class="figure__label">Figure 1</span>
+          Five security oracles against 96 Python implementations whose labels were
+          established by executing an exploit — 48 secure, 48 vulnerable, 0 invalid,
+          0 disagreements with author intent. A perfect oracle scores Youden’s
+          J&nbsp;=&nbsp;1.0.
+        </figcaption>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Oracle discrimination on 96 execution-labelled variants">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Oracle</th>
+                <th scope="col" class="num">Sensitivity</th>
+                <th scope="col" class="num">Specificity</th>
+                <th scope="col" class="num">Youden’s J</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row"><code>structural</code> <span class="tag">AST, written for this study</span></th><td class="num">68.8%</td><td class="num">79.2%</td><td class="num strong">+0.479</td></tr>
+              <tr><th scope="row"><code>pattern</code> <span class="tag">regex, written for this study</span></th><td class="num">75.0%</td><td class="num">62.5%</td><td class="num">+0.375</td></tr>
+              <tr><th scope="row"><code>bandit</code> 1.9.4</th><td class="num">52.1%</td><td class="num">75.0%</td><td class="num">+0.271</td></tr>
+              <tr><th scope="row"><code>semgrep</code> 1.173.0 <code>p/security-audit</code></th><td class="num">31.2%</td><td class="num">93.8%</td><td class="num">+0.250</td></tr>
+              <tr><th scope="row"><code>semgrep</code> 1.173.0 <code>p/python</code></th><td class="num">20.8%</td><td class="num">95.8%</td><td class="num">+0.167</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure__note">
+          Intervals in the source report are percentile bootstrap over <em>cases</em>,
+          not variants, because variants inside a case are not independent draws. Two
+          pre-planned sensitivity analyses — count any finding, or count only
+          confident findings — move bandit by ±0.04 and change nothing else.
+        </p>
+      </figure>
+
+      <figure class="figure" data-source="security-oracle-discrimination — results/PRODUCTION.md">
+        <figcaption>
+          <span class="figure__label">Figure 2</span>
+          The same five oracles against 140 real fixes to real CVEs in 65 real
+          projects — aiohttp, Django, Synapse, superset, GitPython, Anki, thumbor,
+          python-rsa. Each observation is one Python file immediately before a
+          security fix and at the fix. The right-hand column asks only whether the
+          verdict changed when the weakness was actually repaired.
+        </figcaption>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Detection and fix blindness across 140 real CVE fix pairs">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Oracle</th>
+                <th scope="col" class="num">Detected the pre-fix file</th>
+                <th scope="col" class="num">Fixes that changed nothing in its verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row"><code>bandit</code></th><td class="num">29.3% (41/140)</td><td class="num strong">95.7%</td></tr>
+              <tr><th scope="row"><code>structural</code></th><td class="num">29.3% (41/140)</td><td class="num strong">96.4%</td></tr>
+              <tr><th scope="row"><code>pattern</code></th><td class="num">27.1% (38/140)</td><td class="num strong">92.9%</td></tr>
+              <tr><th scope="row"><code>semgrep p/security-audit</code></th><td class="num">7.9% (11/140)</td><td class="num strong">98.6%</td></tr>
+              <tr><th scope="row"><code>semgrep p/python</code></th><td class="num">4.3% (6/140)</td><td class="num strong">97.9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure__note">
+          For between 130 and 138 of 140 real security fixes, the oracle said exactly
+          the same thing before and after. Detection rates are reported as
+          <strong>floors</strong>, because a fix commit may touch files that never
+          carried the bug; the fix-blindness column needs no such assumption. 37 of
+          the 77 single-file fixes were missed by every one of the five oracles.
+        </p>
+      </figure>
+
+      <figure class="figure" data-source="security-oracle-discrimination — RESEARCH.md §4.2">
+        <figcaption>
+          <span class="figure__label">Figure 3</span>
+          False alarms follow the spelling. “Plain” and “decoy” variants are both
+          secure — the same exploit witness was run against both and failed against
+          both. Decoys merely carry the weakness class’s lexical signature: the
+          dangerous call written out in a comment, <code>md5</code> as a cache key in a
+          module that stores passwords with PBKDF2, <code>shell=True</code> with every
+          argument correctly quoted.
+        </figcaption>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="False alarm rate on plain secure code versus decoys">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Oracle</th>
+                <th scope="col" class="num">Plain secure flagged</th>
+                <th scope="col" class="num">Decoy secure flagged</th>
+                <th scope="col" class="num">Ratio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row"><code>pattern</code></th><td class="num">6.9% (2/29)</td><td class="num strong">84.2% (16/19)</td><td class="num">12×</td></tr>
+              <tr><th scope="row"><code>structural</code></th><td class="num">6.9% (2/29)</td><td class="num strong">42.1% (8/19)</td><td class="num">6×</td></tr>
+              <tr><th scope="row"><code>bandit</code></th><td class="num">13.8% (4/29)</td><td class="num strong">42.1% (8/19)</td><td class="num">3×</td></tr>
+              <tr><th scope="row"><code>semgrep p/security-audit</code></th><td class="num">0.0% (0/29)</td><td class="num">15.8% (3/19)</td><td class="num">—</td></tr>
+              <tr><th scope="row"><code>semgrep p/python</code></th><td class="num">0.0% (0/29)</td><td class="num">10.5% (2/19)</td><td class="num">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure__note">
+          One secure variant was flagged by all five oracles:
+          <code>shell=True</code> with every argument quoted for the platform. The
+          witness fires a shell separator at it and the injection fails. A benchmark
+          using any of these oracles would count that implementation as insecure.
+        </p>
+      </figure>
+
+      <div class="callout" role="note" data-source="security-oracle-discrimination — RESEARCH.md §4bis">
+        <p class="callout__title">Did the hand-built corpus predict reality?</p>
+        <p>
+          Over the 30 (oracle, weakness class) cells the two studies share:
+          <strong>83% agreement</strong> (25/30) on whether an oracle detects a class at
+          all, Spearman <strong>ρ = +0.782</strong> between synthetic and real detection
+          rates, and the real rate is <strong>lower</strong> than the synthetic rate in
+          <strong>19 of 30</strong> cells. A corpus written to embarrass these tools would
+          score them below their real-world performance. This one scores them above
+          it — the hand-written mutants are easier than what maintainers actually
+          shipped.
+        </p>
+      </div>
+
+      <figure class="figure" data-source="agentic-digital-twin — data/retrieval_eval.yaml, data/grounding_eval.yaml">
+        <figcaption>
+          <span class="figure__label">Figure 4</span>
+          Measuring a grounded-answering system rather than asserting it. Retrieval
+          recall is a credibility property here, not a relevance nicety: a system that
+          refuses when it retrieves nothing will confidently deny a qualification it
+          actually holds.
+        </figcaption>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Retrieval and claim verification measurements">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Retrieval, over 24 questions answerable from the corpus</th>
+                <th scope="col" class="num">recall@8</th>
+                <th scope="col" class="num">MRR</th>
+                <th scope="col" class="num">No evidence returned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Token overlap</th><td class="num">12/24 (50%)</td><td class="num">0.368</td><td class="num">1</td></tr>
+              <tr><th scope="row">BM25 + reviewed alias map</th><td class="num strong">24/24 (100%)</td><td class="num strong">0.896</td><td class="num">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Claim verification against 36 labelled claims">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Claim verification, 36 labelled claims (20 fabricated)</th>
+                <th scope="col" class="num">Precision</th>
+                <th scope="col" class="num">Recall</th>
+                <th scope="col" class="num">Fabrications accepted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">As originally shipped — overlap ratio only</th><td class="num">0.556</td><td class="num">0.938</td><td class="num">12 / 20</td></tr>
+              <tr><th scope="row">With unsupported-name check, threshold from a sweep</th><td class="num strong">0.941</td><td class="num strong">1.000</td><td class="num strong">1 / 20</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure__note">
+          Read the 100% with the caveat it deserves: the eval set and the alias map
+          were written in the same sitting, so it measures whether known vocabulary
+          gaps stay closed, not general recall. One labelled fabrication still passes
+          verification, and a test pins it so the gap stays visible.
+        </p>
+      </figure>
+
+      <div class="callout callout--negative" role="note" data-source="agentic-digital-twin — “What the injection filter is worth”">
+        <p class="callout__title">The most useful number I have is a negative one</p>
+        <p>
+          A regex prompt-injection filter caught <strong>18 of 18</strong> phrasings the
+          patterns were written against, <strong>0 of 10</strong> phrasings written
+          afterwards for the same intents, and produced <strong>0 false positives</strong>
+          on 26 ordinary questions. The 100% is meaningless — the patterns and that
+          corpus were written together. The honest figure is the second row, and it is
+          not a gap to close by adding patterns; it is what keyword matching
+          <em>is</em> against anyone who can rephrase. So the filter is a courtesy, not a
+          defence. The layer that actually holds is grounding: tests assert that every
+          held-out injection evades the filter and every fabrication it was fishing for
+          is still refused.
+        </p>
+      </div>
+
+      <div class="strip" data-source="repository READMEs; test counts as reported by the run each README documents">
+        <h3 class="strip__title">Reproducibility, as reported by each repository</h3>
+        <dl class="strip__list">
+          <div><dt>secure-instruction-placement</dt><dd>48 unit tests, standard library only; CI on Python 3.11 and 3.12; six public releases</dd></div>
+          <div><dt>effect-broker</dt><dd>68 passed, 11 skipped at commit <code>61906b2</code> on Python 3.13.5; <code>ruff check</code> clean. The 11 skips are the Postgres cases, which need a test DSN</dd></div>
+          <div><dt>agent-redteam</dt><dd>153 passed; <code>ruff check</code> clean; every target and model response in that run was a local fake or a recorded fixture</dd></div>
+          <div><dt>agentic digital twin</dt><dd>191 passed with network access blocked inside pytest; CI across Python 3.11, 3.12 and 3.13</dd></div>
+        </dl>
+        <p class="figure__note">
+          Test counts are evidence that a claim is <em>checked</em>, not that a system is
+          correct. They are listed because the alternative — asserting quality — is
+          worth less.
+        </p>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 03 artifacts ───────────────────────── -->
+    <section id="artifacts" aria-labelledby="artifacts-heading">
+      <h2 id="artifacts-heading"><span class="sec-num">03</span> Research artifacts</h2>
+      <div class="banner" role="note">
+        <p>
+          <strong>Status: research artifact, not a publication.</strong> Both items below
+          are public code, protocols and data. Neither is peer-reviewed, submitted,
+          accepted, or posted as a preprint, and neither has been through independent
+          methodological review.
+        </p>
+      </div>
+
+      <article class="entry">
+        <header class="entry__head">
+          <h3 class="entry__title">Does the oracle read the code, or the spelling?</h3>
+          <p class="entry__meta">
+            <span class="pill">Artifact · not peer-reviewed</span>
+            <span class="entry__sub">An execution-grounded audit of the security oracles used to score AI-generated code</span>
+          </p>
+        </header>
+        <p>
+          Two studies. A <strong>controlled</strong> one: five oracles against 96 Python
+          implementations whose security labels were earned by executing an exploit,
+          never asserted by an author. And a <strong>production</strong> one, on code
+          nobody involved wrote: the same five oracles against 140 real fixes to real
+          CVEs in 65 real projects, where the label comes from a reviewed advisory and
+          the maintainer’s own patch. The second exists because the first has an
+          obvious objection — its author also chose the mutations.
+        </p>
+        <p>
+          The design separates the two reasons a verdict is wrong: <em>not having a
+          rule</em>, and <em>having a rule that matches the wrong thing</em>. The headline
+          statistic is conditional on the oracle having flagged the textbook form, so
+          absence of coverage cannot be mistaken for form-sensitivity. The protocol was
+          fixed before any oracle ran.
+        </p>
+        <ul class="factlist">
+          <li><b>96</b> execution-labelled variants across 8 weakness classes; 48 secure, 48 vulnerable, 0 invalid</li>
+          <li><b>140</b> real CVE fix pairs, 102 advisories, 65 repositories</li>
+          <li>Labels replicate across platforms — identical split and identical scores on an Ubuntu CI runner under Python 3.12</li>
+          <li>Stated gap: CodeQL, the oracle behind much of the published literature, is <b>not</b> audited</li>
+        </ul>
+        <p class="entry__caveat">
+          It does not claim any published benchmark is wrong; it characterises
+          <em>families</em> of oracle. It does not measure static analysers as static
+          analysers — a tool tuned for a low false-positive rate is behaving correctly
+          when it stays quiet. The claim is about what happens when such a tool is
+          promoted to benchmark ground truth, where silence is scored as security. The
+          corpus is small and hand-built: no rate here estimates how often this happens
+          in the wild.
+        </p>
+        <p class="entry__links">
+          <a class="link-btn" href="https://github.com/prathamesh-git9/security-oracle-discrimination" rel="noopener">Repository</a>
+        </p>
+      </article>
+
+      <article class="entry">
+        <header class="entry__head">
+          <h3 class="entry__title">Secure Instruction Placement for AI Coding Agents</h3>
+          <p class="entry__meta">
+            <span class="pill">Artifact · research in progress · not peer-reviewed</span>
+            <span class="entry__sub">Does the <em>location</em> of an identical secure-coding instruction change agent output?</span>
+          </p>
+        </header>
+        <p>
+          A 2&nbsp;×&nbsp;2 factorial design over where a fixed security sentence lives:
+          absent, in the task instruction, in the repository context, or both. The
+          pre-specified primary outcome is joint functional-and-security success under
+          executable tests. The point of publishing the artifact before results is to
+          make the research decisions inspectable: exact wording, task and verifier
+          contracts, benchmark seed audits, a fail-closed runner with immutable raw
+          records, and the analysis code.
+        </p>
+        <ul class="factlist">
+          <li>Two public, explicitly <b>non-confirmatory</b> pilots — a four-condition infrastructure pilot and a 12-run writable-agent pilot with hashes and executable outcomes</li>
+          <li>A development security-oracle mutation audit detected <b>3/3</b> targeted unsafe regressions while all functional tests still passed</li>
+          <li>Three pilot tasks permanently locked as development data; <b>eight</b> untouched tasks protected as a holdout</li>
+          <li>A deterministic <b>96-run</b> schedule and task-clustered factorial analysis committed <em>before</em> holdout execution</li>
+          <li>The runner refuses to execute while the agent configuration is marked <code>draft-not-frozen</code></li>
+        </ul>
+        <p class="entry__caveat">
+          Confirmatory runs have been executed locally, but their outputs and analysis
+          are not yet a reviewed public result. This page therefore claims no
+          experimental effect. Pilot observations remain non-confirmatory by
+          construction, and independent methods review is still outstanding.
+        </p>
+        <p class="entry__links">
+          <a class="link-btn" href="https://github.com/prathamesh-git9/secure-instruction-placement" rel="noopener">Repository</a>
+        </p>
+      </article>
+    </section>
+
+    <!-- ───────────────────────── 04 selected work ───────────────────────── -->
+    <section id="work" aria-labelledby="work-heading">
+      <h2 id="work-heading"><span class="sec-num">04</span> Selected work</h2>
+      <p class="section-intro">
+        Working systems with offline deterministic test
+        suites so what is under test is the system’s behaviour rather than a
+        provider’s mood.
+      </p>
+
+      <div class="grid grid--2">
+
+        <article class="card card--project">
+          <h3><a href="https://github.com/prathamesh-git9/effect-broker" rel="noopener">effect-broker</a></h3>
+          <p class="card__kicker">Correctness boundary for side-effecting agent tools</p>
+          <p>
+            One downstream idempotency key across every retry, authoritative
+            reconciliation, and an honest <code>manual_review</code> instead of a fake
+            exactly-once guarantee. The crash matrix kills a worker with a real
+            <code>os._exit(137)</code> after the target commits but before the receipt is
+            written — the exact window that causes double-charges — then asserts the
+            <em>target-side</em> effect count after recovery.
+          </p>
+          <p class="card__caveat">
+            Explicitly not an unconditional exactly-once system: if a target supplies
+            neither idempotency nor authoritative reconciliation, the broker stops and
+            requires manual review. Ships no production payment or email adapters.
+          </p>
+        </article>
+
+        <article class="card card--project">
+          <h3><a href="https://github.com/prathamesh-git9/agent-redteam" rel="noopener">agent-redteam</a></h3>
+          <p class="card__kicker">Adversarial testing and runtime guardrails for LLM agents</p>
+          <p>
+            A layered oracle scores attack success from planted evidence rather than by
+            eyeballing model output, and rolls it into a recomputable risk vector you
+            can gate CI on. Agentic findings carry a hash-chained causal proof: the
+            poisoned trace, a clean-fixture counterfactual, and the attribution claim
+            share one content address, so post-run edits are detectable without
+            rerunning a model.
+          </p>
+          <p class="card__caveat">
+            Defensive tool for systems you own or are authorised to assess; a run is
+            refused unless the target config asserts authorisation and the host is
+            allowlisted. Canaries are synthetic. The offline result does not measure
+            any live model, and passing the suite is not a claim of security.
+          </p>
+        </article>
+
+        <article class="card card--project">
+          <h3><a href="https://github.com/prathamesh-git9/patchpilot" rel="noopener">PatchPilot</a></h3>
+          <p class="card__kicker">APIs that migrate their own customers</p>
+          <p>
+            Compares two OpenAPI contracts, finds affected HTTP call sites in
+            JavaScript, TypeScript and Python, generates deterministic source patches
+            for safe migrations, validates the rewritten files, and emits a
+            GitHub-ready unified patch. Providers state exact intent through OpenAPI
+            vendor extensions, and short-lived Ed25519 manifests let a customer verify
+            the migration hints really came from the provider.
+          </p>
+          <p class="card__caveat">
+            It does not pretend a model can safely guess every migration: ambiguous
+            changes are flagged for a human rather than invented. It runs parser-level
+            syntax checks and never executes uploaded customer code.
+          </p>
+        </article>
+
+        <article class="card card--project">
+          <h3><a href="https://github.com/prathamesh-git9/agentic-digital-twin" rel="noopener">agentic-digital-twin</a></h3>
+          <p class="card__kicker">Source-grounded answering behind an authority gate</p>
+          <p>
+            Answers only from a structured CV corpus and live allow-listed repository
+            metadata, naming its sources. Background research can <em>propose</em> visitor
+            context, but the context assembler has no code path that admits it until
+            the visitor confirms — pre-confirmation isolation happens before any model
+            is called, so prompt instructions are defence in depth rather than the
+            access-control mechanism.
+          </p>
+          <p class="card__caveat">
+            Retrieval and verification are measured, not asserted — see Figure 4 and
+            the negative result above.
+          </p>
+        </article>
+      </div>
+
+      <h3 class="subhead">Also public</h3>
+      <ul class="linklist">
+        <li><a href="https://github.com/prathamesh-git9/agent-runtime" rel="noopener">agent-runtime</a> — durable, resumable execution for tool-calling loops; an event-sourced journal and deterministic replay make crash recovery something that never re-fires a side effect</li>
+        <li><a href="https://github.com/prathamesh-git9/effect-browser" rel="noopener">effect-browser</a> — crash-safe control plane for AI-driven browser operations; navigation runs freely, external commits require exact action-bound authority</li>
+        <li><a href="https://github.com/prathamesh-git9/promise-ledger" rel="noopener">promise-ledger</a> — versioned, evidence-backed record for commitments; models propose with sources, humans activate, supersession is explicit rather than inferred</li>
+        <li><a href="https://github.com/prathamesh-git9/reachable" rel="noopener">reachable</a> — CVE triage by static call-graph reachability, emitting OpenVEX; three verdicts, never two, and uncertainty degrades to <code>UNKNOWN</code></li>
+        <li><a href="https://github.com/prathamesh-git9/trustdesk" rel="noopener">trustdesk</a> — grounded drafting for vendor security questionnaires behind a calibrated relevance floor, with mandatory human review and an append-only audit trail</li>
+        <li><a href="https://github.com/prathamesh-git9/answer-engine" rel="noopener">answer-engine</a> — RAG and tool-calling backend with adaptive retrieval routing, hybrid BM25 + vector fused with RRF, and grounding verification</li>
+        <li><a href="https://github.com/prathamesh-git9/agent-mesh" rel="noopener">agent-mesh</a> — event-driven multi-agent backend; at-least-once delivery with idempotency, dead-letter recovery, fan-in that degrades on partial failure instead of hanging</li>
+        <li><a href="https://github.com/prathamesh-git9/llm-gateway" rel="noopener">llm-gateway</a> — self-hostable OpenAI-compatible inference gateway with policy routing, circuit breakers, semantic caching and hard per-tenant budgets</li>
+        <li><a href="https://github.com/prathamesh-git9/mcp-servers" rel="noopener">mcp-servers</a> — six independently runnable MCP servers with typed inputs and outputs and a socket-restricted test suite, so nothing quietly reaches the network</li>
+      </ul>
+    </section>
+
+    <!-- ───────────────────────── 05 method ───────────────────────── -->
+    <section id="method" aria-labelledby="method-heading">
+      <h2 id="method-heading"><span class="sec-num">05</span> How I work</h2>
+      <ol class="principles">
+        <li>
+          <h3>Prove the failure, not the happy path.</h3>
+          <p>
+            A test that shows the system working under good conditions is a
+            demonstration. The interesting assertion is what the target looks like
+            after a worker is killed inside the one window that causes duplicates.
+          </p>
+        </li>
+        <li>
+          <h3>Durable before dispatch.</h3>
+          <p>
+            Append the intent to a journal, then act. Recovery reads the log, never
+            process memory, and compare-and-swap transitions keep two workers from
+            advancing the same record.
+          </p>
+        </li>
+        <li>
+          <h3>Degrade to unknown, not to a guess.</h3>
+          <p>
+            Every one of these systems has a verdict for <em>cannot be determined</em>,
+            and it is never the optimistic one.
+          </p>
+        </li>
+        <li>
+          <h3>Keep a human on the authority boundary.</h3>
+          <p>
+            Irreversible or external effects pass through an explicit gate with
+            recorded scope, not a confidence threshold. A proposal is not an
+            authorised effect.
+          </p>
+        </li>
+        <li>
+          <h3>Measure the thing you are about to claim.</h3>
+          <p>
+            Both of the most valuable numbers I have produced were unflattering: a
+            claim verifier that accepted 12 of 20 fabrications, and an injection filter
+            that caught none of the ten held-out rephrasings. Publishing those is what
+            makes the favourable numbers on the same page worth reading.
+          </p>
+        </li>
+        <li>
+          <h3>Default to offline and deterministic.</h3>
+          <p>
+            Test suites and demos run with no API keys and, where it matters, with the
+            network blocked inside the test process.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────────────────── 06 background ───────────────────────── -->
+    <section id="background" aria-labelledby="background-heading">
+      <h2 id="background-heading"><span class="sec-num">06</span> Background</h2>
+      <p>
+        I am a software engineer in Dublin, Ireland, working on the reliability and
+        evaluation of AI systems that take actions. My route into it was ordinary:
+        support engineering, then backend and platform work, then a master’s in
+        cybersecurity — and then the growing suspicion that the hardest problems in
+        agent systems are not reasoning problems at all, but information and
+        atomicity problems that better models do not touch.
+      </p>
+
+      <div class="grid grid--2">
+        <div class="tl">
+          <h3 class="subhead">Education</h3>
+          <ol class="timeline">
+            <li>
+              <p class="timeline__when">Sep 2024 – Sep 2025</p>
+              <p class="timeline__what"><b>MSc, Cybersecurity</b></p>
+              <p class="timeline__where">Dublin Business School, Ireland</p>
+            </li>
+            <li>
+              <p class="timeline__when">Aug 2021 – Jun 2024</p>
+              <p class="timeline__what"><b>Bachelor’s degree, Computer Science</b> — First Class</p>
+              <p class="timeline__where">Savitribai Phule Pune University, India</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="tl">
+          <h3 class="subhead">Experience</h3>
+          <ol class="timeline">
+            <li>
+              <p class="timeline__when">Oct 2024 – Dec 2024</p>
+              <p class="timeline__what"><b>Java Developer Intern</b></p>
+              <p class="timeline__where">PhysicsWallah — remote</p>
+            </li>
+            <li>
+              <p class="timeline__when">Jun 2022 – Jul 2024</p>
+              <p class="timeline__what"><b>Software Engineer</b></p>
+              <p class="timeline__where">matriXploit, India — on-site</p>
+            </li>
+            <li>
+              <p class="timeline__when">Jan 2022 – Jun 2022</p>
+              <p class="timeline__what"><b>Technical Support Engineer</b></p>
+              <p class="timeline__where">matriXploit, India</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 class="subhead">Tools I reach for</h3>
+      <p class="tools">
+        Python · Java · FastAPI · Spring Boot · PostgreSQL · SQLite · Docker ·
+        Kubernetes · AWS · Azure · Terraform · MCP · pytest · Ruff
+      </p>
+      <p class="figure__note">
+        Listed because they appear in the work above, not as a proficiency ranking.
+      </p>
+    </section>
+
+    <!-- ───────────────────────── 07 contact ───────────────────────── -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading"><span class="sec-num">07</span> Contact</h2>
+      <p class="section-intro">
+        Email is the reliable channel. It is the same address recorded as the git
+        author identity on the research commits, so the artifact trail and any future
+        publication trail agree without rewriting.
+      </p>
+      <ul class="contact">
+        <li>
+          <span class="contact__label">Email</span>
+          <a href="mailto:prathemesh7744@gmail.com">prathemesh7744@gmail.com</a>
+        </li>
+        <li>
+          <span class="contact__label">GitHub</span>
+          <a href="https://github.com/prathamesh-git9" rel="me noopener">github.com/prathamesh-git9</a>
+        </li>
+        <li>
+          <span class="contact__label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/prathamesh-kalamkar/" rel="me noopener">linkedin.com/in/prathamesh-kalamkar</a>
+        </li>
+        <li>
+          <span class="contact__label">Based in</span>
+          <span>Dublin, Ireland</span>
+        </li>
+      </ul>
+      <p class="figure__note">
+        No ORCID or Google Scholar record exists yet; this page will link them when
+        they do. If you are checking a claim on this page, the repository that
+        produced it is linked beside it — please read the caveats it ships with.
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p>© 2026 Prathamesh Kalamkar. Content licensed for reading and citation; the linked repositories are MIT.</p>
+    <p>
+      Static HTML, CSS and about a hundred lines of JavaScript. No fonts, images,
+      analytics, cookies, or third-party requests of any kind.
+      <span class="nowrap">Last reviewed 2026-08-24.</span>
+    </p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>

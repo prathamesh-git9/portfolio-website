@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static research portfolio for Prathamesh Kalamkar. No build step, no dependencies.",
+  "homepage": "https://prathamesh-git9.github.io/portfolio-website/",
+  "license": "MIT",
+  "author": "Prathamesh Kalamkar",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

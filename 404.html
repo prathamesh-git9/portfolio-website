@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Prathamesh Kalamkar</title>
+<meta name="description" content="That page does not exist on prathamesh-git9.github.io/portfolio-website. Links to the sections that do.">
+<meta name="robots" content="noindex, follow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1113" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Minimal fallback: a 404 can be served for a deep path, where the relative
+     stylesheet link above may not resolve. This keeps the page legible anyway. */
+  body { margin: 0; background: #fbfaf7; color: #14181d;
+         font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+         line-height: 1.65; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0e1113; color: #e9ecee; }
+  }
+</style>
+<script>
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<main class="notfound">
+  <p class="notfound__code">404</p>
+  <h1>That page does not exist.</h1>
+  <p class="lead">
+    Nothing here has moved — this site is a single page, so a URL below the root
+    was either mistyped or never existed. Everything is one link away.
+  </p>
+
+  <ul>
+    <li><a href="./">Home</a> — hero, focus, and what this page does not claim</li>
+    <li><a href="./#evidence">Evidence</a> — the measured results, with their conditions</li>
+    <li><a href="./#artifacts">Research artifacts</a> — public code and protocols, not peer-reviewed papers</li>
+    <li><a href="./#work">Selected work</a> — the systems, and what each one does not guarantee</li>
+    <li><a href="./#contact">Contact</a> — <a href="mailto:prathemesh7744@gmail.com">prathemesh7744@gmail.com</a></li>
+    <li><a href="https://github.com/prathamesh-git9" rel="noopener">github.com/prathamesh-git9</a> — the repositories themselves</li>
+  </ul>
+</main>
+
+</body>
+</html>
