@@ -496,6 +496,30 @@
 
       <div class="grid grid--2">
 
+        <article class="card card--project" id="patchpilot">
+          <h3><a href="https://github.com/prathamesh-git9/patchpilot" rel="noopener">PatchPilot</a></h3>
+          <p class="card__kicker">APIs that migrate their own customers</p>
+          <p>
+            A working response to YC's
+            <a href="https://www.ycombinator.com/rfs" rel="noopener">Self-Maintaining APIs</a>
+            request. A provider can fan one signed, hash-pinned API release out to as
+            many as 100 opted-in customer repositories. Each customer's protected
+            workflow verifies its own pinned Ed25519 key, finds affected JavaScript,
+            TypeScript and Python call sites, applies deterministic syntax-valid edits,
+            and opens a reviewable pull request. See the
+            <a href="https://github.com/prathamesh-git9/patchpilot/releases/tag/v0.18.0" rel="noopener">v0.18.0 release</a>.
+          </p>
+          <p class="card__caveat">
+            It does not pretend a model can safely guess every migration: ambiguous
+            changes are flagged for a human rather than invented. Missing operation IDs
+            and safe changes with no supported call-site evidence are reported as
+            coverage gaps, never as successful migrations. Campaigns are an end-to-end
+            prototype, not a hosted service: customer consent is currently file-backed,
+            and there is no revocation UI. It runs parser-level syntax checks and never
+            executes uploaded customer code.
+          </p>
+        </article>
+
         <article class="card card--project" id="effect-broker">
           <h3><a href="https://github.com/prathamesh-git9/effect-broker" rel="noopener">effect-broker</a></h3>
           <p class="card__kicker">Correctness boundary for side-effecting agent tools</p>
@@ -530,30 +554,6 @@
             refused unless the target config asserts authorisation and the host is
             allowlisted. Canaries are synthetic. The offline result does not measure
             any live model, and passing the suite is not a claim of security.
-          </p>
-        </article>
-
-        <article class="card card--project" id="patchpilot">
-          <h3><a href="https://github.com/prathamesh-git9/patchpilot" rel="noopener">PatchPilot</a></h3>
-          <p class="card__kicker">APIs that migrate their own customers</p>
-          <p>
-            A working response to YC's
-            <a href="https://www.ycombinator.com/rfs" rel="noopener">Self-Maintaining APIs</a>
-            request. A provider can fan one signed, hash-pinned API release out to as
-            many as 100 opted-in customer repositories. Each customer's protected
-            workflow verifies its own pinned Ed25519 key, finds affected JavaScript,
-            TypeScript and Python call sites, applies deterministic syntax-valid edits,
-            and opens a reviewable pull request. See the
-            <a href="https://github.com/prathamesh-git9/patchpilot/releases/tag/v0.18.0" rel="noopener">v0.18.0 release</a>.
-          </p>
-          <p class="card__caveat">
-            It does not pretend a model can safely guess every migration: ambiguous
-            changes are flagged for a human rather than invented. Missing operation IDs
-            and safe changes with no supported call-site evidence are reported as
-            coverage gaps, never as successful migrations. Campaigns are an end-to-end
-            prototype, not a hosted service: customer consent is currently file-backed,
-            and there is no revocation UI. It runs parser-level syntax checks and never
-            executes uploaded customer code.
           </p>
         </article>
 
