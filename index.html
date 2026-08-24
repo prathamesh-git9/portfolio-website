@@ -17,6 +17,31 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Prathamesh Kalamkar",
+  "url": "https://prathamesh-git9.github.io/portfolio-website/",
+  "email": "mailto:prathemesh7744@gmail.com",
+  "homeLocation": { "@type": "Place", "name": "Dublin, Ireland" },
+  "alumniOf": [
+    { "@type": "CollegeOrUniversity", "name": "Dublin Business School" },
+    { "@type": "CollegeOrUniversity", "name": "Savitribai Phule Pune University" }
+  ],
+  "knowsAbout": [
+    "Trustworthy artificial intelligence",
+    "AI for software engineering",
+    "Software security",
+    "Empirical software engineering",
+    "Reliable tool-calling agents"
+  ],
+  "sameAs": [
+    "https://github.com/prathamesh-git9",
+    "https://www.linkedin.com/in/prathamesh-kalamkar/"
+  ]
+}
+</script>
 <script>
   // Applied before first paint so an explicit theme choice does not flash.
   try {
@@ -371,7 +396,7 @@
         </p>
       </div>
 
-      <article class="entry">
+      <article class="entry" id="soda">
         <header class="entry__head">
           <h3 class="entry__title">Does the oracle read the code, or the spelling?</h3>
           <p class="entry__meta">
@@ -415,7 +440,7 @@
         </p>
       </article>
 
-      <article class="entry">
+      <article class="entry" id="secure-instruction-placement">
         <header class="entry__head">
           <h3 class="entry__title">Secure Instruction Placement for AI Coding Agents</h3>
           <p class="entry__meta">
@@ -462,7 +487,7 @@
 
       <div class="grid grid--2">
 
-        <article class="card card--project">
+        <article class="card card--project" id="effect-broker">
           <h3><a href="https://github.com/prathamesh-git9/effect-broker" rel="noopener">effect-broker</a></h3>
           <p class="card__kicker">Correctness boundary for side-effecting agent tools</p>
           <p>
@@ -480,7 +505,7 @@
           </p>
         </article>
 
-        <article class="card card--project">
+        <article class="card card--project" id="agent-redteam">
           <h3><a href="https://github.com/prathamesh-git9/agent-redteam" rel="noopener">agent-redteam</a></h3>
           <p class="card__kicker">Adversarial testing and runtime guardrails for LLM agents</p>
           <p>
@@ -499,7 +524,7 @@
           </p>
         </article>
 
-        <article class="card card--project">
+        <article class="card card--project" id="patchpilot">
           <h3><a href="https://github.com/prathamesh-git9/patchpilot" rel="noopener">PatchPilot</a></h3>
           <p class="card__kicker">APIs that migrate their own customers</p>
           <p>
@@ -512,12 +537,14 @@
           </p>
           <p class="card__caveat">
             It does not pretend a model can safely guess every migration: ambiguous
-            changes are flagged for a human rather than invented. It runs parser-level
-            syntax checks and never executes uploaded customer code.
+            changes are flagged for a human rather than invented. Missing operation IDs
+            and safe changes with no supported call-site evidence are reported as
+            coverage gaps, never as successful migrations. It runs parser-level syntax
+            checks and never executes uploaded customer code.
           </p>
         </article>
 
-        <article class="card card--project">
+        <article class="card card--project" id="agentic-digital-twin">
           <h3><a href="https://github.com/prathamesh-git9/agentic-digital-twin" rel="noopener">agentic-digital-twin</a></h3>
           <p class="card__kicker">Source-grounded answering behind an authority gate</p>
           <p>
@@ -537,10 +564,10 @@
 
       <h3 class="subhead">Also public</h3>
       <ul class="linklist">
-        <li><a href="https://github.com/prathamesh-git9/agent-runtime" rel="noopener">agent-runtime</a> — durable, resumable execution for tool-calling loops; an event-sourced journal and deterministic replay make crash recovery something that never re-fires a side effect</li>
+        <li id="agent-runtime"><a href="https://github.com/prathamesh-git9/agent-runtime" rel="noopener">agent-runtime</a> — durable, resumable execution for tool-calling loops; an event-sourced journal and deterministic replay make crash recovery something that never re-fires a side effect</li>
         <li><a href="https://github.com/prathamesh-git9/effect-browser" rel="noopener">effect-browser</a> — crash-safe control plane for AI-driven browser operations; navigation runs freely, external commits require exact action-bound authority</li>
         <li><a href="https://github.com/prathamesh-git9/promise-ledger" rel="noopener">promise-ledger</a> — versioned, evidence-backed record for commitments; models propose with sources, humans activate, supersession is explicit rather than inferred</li>
-        <li><a href="https://github.com/prathamesh-git9/reachable" rel="noopener">reachable</a> — CVE triage by static call-graph reachability, emitting OpenVEX; three verdicts, never two, and uncertainty degrades to <code>UNKNOWN</code></li>
+        <li id="reachable"><a href="https://github.com/prathamesh-git9/reachable" rel="noopener">reachable</a> — CVE triage by static call-graph reachability, emitting OpenVEX; three verdicts, never two, and uncertainty degrades to <code>UNKNOWN</code></li>
         <li><a href="https://github.com/prathamesh-git9/trustdesk" rel="noopener">trustdesk</a> — grounded drafting for vendor security questionnaires behind a calibrated relevance floor, with mandatory human review and an append-only audit trail</li>
         <li><a href="https://github.com/prathamesh-git9/answer-engine" rel="noopener">answer-engine</a> — RAG and tool-calling backend with adaptive retrieval routing, hybrid BM25 + vector fused with RRF, and grounding verification</li>
         <li><a href="https://github.com/prathamesh-git9/agent-mesh" rel="noopener">agent-mesh</a> — event-driven multi-agent backend; at-least-once delivery with idempotency, dead-letter recovery, fan-in that degrades on partial failure instead of hanging</li>

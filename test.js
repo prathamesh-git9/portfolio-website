@@ -92,6 +92,17 @@ const REQUIRED_PHRASES = [
   "linkedin.com/in/prathamesh-kalamkar",
 ];
 
+const REQUIRED_FRAGMENT_IDS = [
+  "soda",
+  "secure-instruction-placement",
+  "effect-broker",
+  "agent-redteam",
+  "patchpilot",
+  "agentic-digital-twin",
+  "agent-runtime",
+  "reachable",
+];
+
 /* ------------------------------------------------------------------ runner */
 
 let passed = 0;
@@ -183,6 +194,13 @@ check("required files are present", () => {
   const missing = REQUIRED_FILES.filter((f) => !exists(f));
   assert(missing.length === 0, `missing: ${missing.join(", ")}`);
   return `${REQUIRED_FILES.length} files`;
+});
+
+check("shareable project anchors remain stable", () => {
+  const ids = new Set(attrValues(read("index.html"), "id"));
+  const missing = REQUIRED_FRAGMENT_IDS.filter((id) => !ids.has(id));
+  assert(missing.length === 0, `missing project anchor(s): ${missing.join(", ")}`);
+  return `${REQUIRED_FRAGMENT_IDS.length} anchors`;
 });
 
 check("no build artefacts or dependencies are committed", () => {
@@ -489,7 +507,7 @@ check("index.html: each research artifact is labelled as an artifact", () => {
   const html = read("index.html");
   const section = html.match(/<section id="artifacts"[\s\S]*?<\/section>/i);
   assert(section, "no #artifacts section");
-  const entries = section[0].match(/<article class="entry">[\s\S]*?<\/article>/gi) || [];
+  const entries = section[0].match(/<article\b[^>]*\bclass="entry"[^>]*>[\s\S]*?<\/article>/gi) || [];
   assert(entries.length >= 2, `expected at least 2 artifact entries, found ${entries.length}`);
   for (const entry of entries) {
     const pill = entry.match(/<span class="pill">([^<]*)<\/span>/i);
