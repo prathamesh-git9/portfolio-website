@@ -132,7 +132,7 @@ kept at the precision of their sources.
 | Secure-instruction-placement design, pilots, holdout, 96-run schedule, 3/3 mutation audit, 48 tests | `secure-instruction-placement/README.md` |
 | effect-broker crash matrix, safety classes, 68 passed / 11 skipped at `61906b2` | `effect-broker/README.md` |
 | agent-redteam oracles, causal proof, authorization gate, 153 passed | `agent-redteam/README.md` |
-| PatchPilot behaviour, vendor extensions, Ed25519 manifests, no-execution guarantee | `patchpilot/README.md` |
+| PatchPilot provider campaigns, vendor extensions, Ed25519 manifests, public Action v0.18.0, 118 tests, no-execution guarantee | `patchpilot/README.md`, `docs/provider-campaigns.md`, release and CI at commit `9067d03` |
 | Figure 4 and the injection-filter negative result; digital-twin authority gate; 216 tests | `agentic-digital-twin/README.md` and test run at `8082322` |
 | Education, roles and dates; Dublin; canonical email; GitHub and LinkedIn URLs | `PhD_2028/PROFILE_INTAKE.md` and `agentic-digital-twin/data/profile.yaml` |
 

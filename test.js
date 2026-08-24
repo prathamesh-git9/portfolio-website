@@ -51,6 +51,7 @@ const ALLOWED_HOSTS = new Set([
   "github.com",
   "www.linkedin.com",
   "prathamesh-git9.github.io",
+  "www.ycombinator.com",
 ]);
 
 /* Claims this site is not entitled to make. Checked against the rendered text
