@@ -39,9 +39,11 @@ const REQUIRED_FILES = [
   "favicon.svg",
   "README.md",
   "package.json",
+  "resume.html",
+  "prathamesh-kalamkar-resume.pdf",
 ];
 
-const PAGES = ["index.html", "404.html"];
+const PAGES = ["index.html", "404.html", "resume.html"];
 
 /* Hosts this site is allowed to link out to. Anything else is a mistake or a
    tracker, and both should fail. */
@@ -194,6 +196,13 @@ check("required files are present", () => {
   const missing = REQUIRED_FILES.filter((f) => !exists(f));
   assert(missing.length === 0, `missing: ${missing.join(", ")}`);
   return `${REQUIRED_FILES.length} files`;
+});
+
+check("downloadable résumé is a non-empty PDF", () => {
+  const resume = fs.readFileSync(path.join(ROOT, "prathamesh-kalamkar-resume.pdf"));
+  assert(resume.subarray(0, 5).toString("ascii") === "%PDF-", "résumé does not have a PDF header");
+  assert(resume.length > 20_000, "résumé PDF is unexpectedly small");
+  return `${Math.round(resume.length / 1024)} KiB`;
 });
 
 check("shareable project anchors remain stable", () => {
@@ -394,10 +403,11 @@ for (const page of PAGES) {
     assert(title && title.trim().length > 10, "missing or thin <title>");
     const desc = metaContent(html, "name", "description");
     assert(desc && desc.trim().length >= 50, "missing or thin meta description");
-    assert(/<meta[^>]*name="color-scheme"[^>]*content="light dark"/i.test(html),
-      "missing color-scheme declaration");
+    const colorScheme = metaContent(html, "name", "color-scheme");
+    assert(colorScheme && /\blight\b/i.test(colorScheme), "missing color-scheme declaration");
     const themeColors = (html.match(/<meta[^>]*name="theme-color"[^>]*>/gi) || []);
-    assert(themeColors.length === 2, "expected a theme-color for each scheme");
+    const expectedThemeColors = /\bdark\b/i.test(colorScheme) ? 2 : 1;
+    assert(themeColors.length === expectedThemeColors, "expected a theme-color for each declared scheme");
     return `${title.trim().slice(0, 42)}…`;
   });
 }

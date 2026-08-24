@@ -5,16 +5,18 @@ The static research portfolio for **Prathamesh Kalamkar**, deployed at
 
 Plain HTML, CSS and JavaScript. No build step, no package manager at runtime, no
 framework, no external fonts, no images, no analytics, no cookies, and no
-third-party requests of any kind. The whole site is nine files.
+third-party requests of any kind. The site is deliberately small and auditable.
 
 ```
 index.html      the single content page
+resume.html     recruiter-facing résumé and source for the PDF
+prathamesh-kalamkar-resume.pdf  one-page A4 downloadable résumé
 404.html        not-found page (relative links, minimal inline fallback styling)
 styles.css      the design system: tokens, layout, typography, components
 script.js       two progressive enhancements — theme override, contents highlighting
 favicon.svg     scheme-aware monogram
 robots.txt      crawl policy + sitemap pointer
-sitemap.xml     one URL, the canonical origin
+sitemap.xml     canonical portfolio and résumé URLs
 .nojekyll       tells GitHub Pages to serve the files as-is
 test.js         the checks described below
 package.json    only so that `npm test` works; zero dependencies
@@ -104,6 +106,11 @@ workflow is required.
 `.nojekyll` is committed so that Pages skips Jekyll processing and serves every
 file literally.
 
+The checked-in résumé PDF is generated from `resume.html`. After a factual
+résumé edit, regenerate the PDF with a Chromium-compatible browser's headless
+`--print-to-pdf` option, confirm it remains one A4 page, and run `npm test`
+before publishing.
+
 If the site is ever moved to a different origin — a custom domain, a user page,
 or `/` instead of `/portfolio-website/` — three things must change together:
 the `<link rel="canonical">` and `og:url` in `index.html`, the `<loc>` in
@@ -126,8 +133,8 @@ kept at the precision of their sources.
 | effect-broker crash matrix, safety classes, 68 passed / 11 skipped at `61906b2` | `effect-broker/README.md` |
 | agent-redteam oracles, causal proof, authorization gate, 153 passed | `agent-redteam/README.md` |
 | PatchPilot behaviour, vendor extensions, Ed25519 manifests, no-execution guarantee | `patchpilot/README.md` |
-| Figure 4 and the injection-filter negative result; digital-twin authority gate; 191 tests | `agentic-digital-twin/README.md` |
-| Education, roles and dates; Dublin; canonical email; GitHub and LinkedIn URLs | `PhD_2028/PROFILE_INTAKE.md` |
+| Figure 4 and the injection-filter negative result; digital-twin authority gate; 216 tests | `agentic-digital-twin/README.md` and test run at `8082322` |
+| Education, roles and dates; Dublin; canonical email; GitHub and LinkedIn URLs | `PhD_2028/PROFILE_INTAKE.md` and `agentic-digital-twin/data/profile.yaml` |
 
 Deliberate omissions, each one a decision rather than an oversight:
 

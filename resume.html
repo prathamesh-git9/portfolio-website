@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <title>Prathamesh Kalamkar — Backend and AI Infrastructure Engineer</title>
+  <meta name="description" content="Résumé of Prathamesh Kalamkar, a Dublin-based backend and AI infrastructure engineer working on reliable agent systems, developer tools, and software security.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://prathamesh-git9.github.io/portfolio-website/resume.html">
+  <style>
+    :root { --ink:#172027; --muted:#53616a; --line:#cbd3d7; --accent:#0a5c70; --paper:#fff; }
+    * { box-sizing:border-box; }
+    html { background:#eef1f2; color:var(--ink); font:9.7pt/1.28 Arial, Helvetica, sans-serif; }
+    body { width:210mm; min-height:297mm; margin:16px auto; padding:9mm 13mm; background:var(--paper); box-shadow:0 2px 18px #0002; }
+    h1,h2,h3,p,ul { margin-top:0; }
+    h1 { margin-bottom:2px; font-size:24pt; letter-spacing:-.5px; }
+    .role { margin-bottom:7px; color:var(--accent); font-size:12.5pt; font-weight:700; }
+    .contact { display:flex; flex-wrap:wrap; gap:2px 12px; margin-bottom:6px; color:var(--muted); font-size:8.8pt; }
+    a { color:inherit; text-decoration:none; }
+    h2 { margin:6px 0 4px; padding-bottom:2px; border-bottom:1.5px solid var(--ink); font-size:10.2pt; letter-spacing:.08em; text-transform:uppercase; }
+    h3 { margin-bottom:1px; font-size:10.2pt; }
+    .item { break-inside:avoid; margin-bottom:4px; }
+    .item-head { display:flex; justify-content:space-between; gap:12px; }
+    .when { flex:none; color:var(--muted); font-size:9pt; }
+    .sub { margin-bottom:2px; color:var(--muted); font-style:italic; }
+    p { margin-bottom:5px; }
+    ul { margin:2px 0 0; padding-left:17px; }
+    li { margin-bottom:2px; }
+    .projects { display:grid; grid-template-columns:1fr 1fr; gap:5px 14px; }
+    .project { break-inside:avoid; }
+    .project p { margin-bottom:0; }
+    .skills { display:grid; grid-template-columns:115px 1fr; gap:3px 8px; }
+    .skills b { color:var(--accent); }
+    .note { color:var(--muted); font-size:8.6pt; }
+    @page { size:A4; margin:0; }
+    @media print { html { background:#fff; } body { margin:0; box-shadow:none; } }
+    @media (max-width:760px) { body { width:auto; min-height:0; margin:0; padding:22px; } .projects { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Prathamesh Kalamkar</h1>
+    <p class="role">Backend &amp; AI Infrastructure Engineer</p>
+    <div class="contact" aria-label="Contact details">
+      <span>Dublin, Ireland</span>
+      <a href="mailto:prathemesh7744@gmail.com">prathemesh7744@gmail.com</a>
+      <a href="https://github.com/prathamesh-git9">github.com/prathamesh-git9</a>
+      <a href="https://www.linkedin.com/in/prathamesh-kalamkar/">linkedin.com/in/prathamesh-kalamkar</a>
+      <a href="https://prathamesh-git9.github.io/portfolio-website/">research and engineering portfolio</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p>Backend engineer with 3.5+ years across Java, Spring Boot, Python, REST APIs, production support, and AI workflow infrastructure. Builds reliable tool-execution systems with explicit authority, idempotency, crash recovery, validation, observability, and deterministic tests. Current research examines whether security oracles used to evaluate AI-generated code measure executable behaviour or superficial form.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="item">
+      <div class="item-head"><h3>Independent Software Engineer — AI and Automation Systems</h3><span class="when">Jan 2025–present</span></div>
+      <ul>
+        <li>Built Python services and workflow engines for tool-calling agents with structured outputs, durable state, retries, validation, human-review gates, and evidence-rich audit records.</li>
+        <li>Developed GitHub-integrated developer tooling and OpenAPI migration infrastructure with least-privilege access, signed provider intent, bounded source transforms, and fail-closed coverage reporting.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><h3>Software Engineer — matriXploit Pvt. Ltd.</h3><span class="when">Jun 2022–Jul 2024</span></div>
+      <ul>
+        <li>Built and maintained backend services using Java, Spring Boot, Python, SQL, and REST APIs; delivered features, production fixes, authentication refactors, diagnostics, and regression checks.</li>
+        <li>Worked with QA and support teams on root-cause analysis, code review, release readiness, and production follow-up across shared systems.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head"><h3>Software Engineer Intern — PhysicsWallah</h3><span class="when">Oct–Dec 2024</span></div>
+      <p>Implemented Java and Spring Boot backend features, investigated API behaviour, and supported testing and release readiness for high-usage product workflows.</p>
+    </div>
+    <div class="item">
+      <div class="item-head"><h3>Technical Support Engineer — matriXploit Pvt. Ltd.</h3><span class="when">Jan–Jun 2022</span></div>
+      <p>Investigated application failures through SQL, logs, reproducible cases, and structured escalation; maintained reusable troubleshooting evidence for engineering teams.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Selected Engineering and Research</h2>
+    <div class="projects">
+      <div class="project"><h3>SODA security-oracle benchmark</h3><p>Reproducible construct-validity audit: 96 execution-labelled variants plus 140 real CVE fix pairs from 65 projects; CI, provenance, frozen protocol, and public v0.1.0 artifact.</p></div>
+      <div class="project"><h3>PatchPilot</h3><p>OpenAPI migration engine and GitHub Action that finds affected call sites, generates bounded JS/TS/Python patches, validates syntax, and reports unsupported coverage instead of claiming false success.</p></div>
+      <div class="project"><h3>Effect Broker</h3><p>Durable correctness boundary for side-effecting agent tools using stable intent, idempotency contracts, authoritative reconciliation, crash recovery, and explicit unknown outcomes.</p></div>
+      <div class="project"><h3>Agent Redteam</h3><p>Authorised adversarial testing and runtime guardrails for LLM agents with planted-evidence oracles, recomputable risk vectors, causal proof records, and offline regression suites.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="item-head"><p><b>MSc Cybersecurity, First Class Honours</b> — Dublin Business School</p><span class="when">2024–2025</span></div>
+    <div class="item-head"><p><b>BSc Computer Science, First Class</b> — Savitribai Phule Pune University</p><span class="when">2021–2024</span></div>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <b>Backend</b><span>Python, Java, Spring Boot, FastAPI, REST APIs, SQL, PostgreSQL, SQLite</span>
+      <b>AI systems</b><span>tool calling, MCP, agent workflows, structured outputs, RAG, evaluation harnesses, guardrails</span>
+      <b>Reliability</b><span>idempotency, durable execution, event sourcing, retries, audit trails, observability, pytest</span>
+      <b>Platform</b><span>GitHub Actions, Docker, Kubernetes, AWS, Azure, Terraform, CI/CD</span>
+    </div>
+  </section>
+
+  <p class="note">Project evidence, limitations, reproducible commands, and source repositories are linked from the portfolio. Research artifacts are not represented as peer-reviewed publications.</p>
+</body>
+</html>
