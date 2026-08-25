@@ -383,7 +383,7 @@
           <div><dt>effect-broker</dt><dd>68 passed, 11 skipped at commit <code>61906b2</code> on Python 3.13.5; <code>ruff check</code> clean. The 11 skips are the Postgres cases, which need a test DSN</dd></div>
           <div><dt>agent-redteam</dt><dd>153 passed; <code>ruff check</code> clean; every target and model response in that run was a local fake or a recorded fixture</dd></div>
           <div><dt>agentic digital twin</dt><dd>216 passed with network access blocked inside pytest; CI across Python 3.11, 3.12 and 3.13</dd></div>
-          <div><dt>PatchPilot</dt><dd>118 passing tests at v0.18.0; public Action smoke-tested in CI; provider campaigns verify three asset hashes and a customer-pinned Ed25519 key before applying code</dd></div>
+          <div><dt>PatchPilot</dt><dd>124 passing tests at v0.19.0; public Action smoke-tested in CI; exact customer consent, expiry, and revocation are enforced before token issuance, then the customer verifies three asset hashes and its pinned Ed25519 key</dd></div>
         </dl>
         <p class="figure__note">
           Test counts are evidence that a claim is <em>checked</em>, not that a system is
@@ -503,19 +503,21 @@
             A working response to YC's
             <a href="https://www.ycombinator.com/rfs" rel="noopener">Self-Maintaining APIs</a>
             request. A provider can fan one signed, hash-pinned API release out to as
-            many as 100 opted-in customer repositories. Each customer's protected
+            many as 100 explicitly consented customer repositories. Consent is bound
+            to the provider key and exact repository target before token issuance;
+            each customer's protected
             workflow verifies its own pinned Ed25519 key, finds affected JavaScript,
             TypeScript and Python call sites, applies deterministic syntax-valid edits,
             and opens a reviewable pull request. See the
-            <a href="https://github.com/prathamesh-git9/patchpilot/releases/tag/v0.18.0" rel="noopener">v0.18.0 release</a>.
+            <a href="https://github.com/prathamesh-git9/patchpilot/releases/tag/v0.19.0" rel="noopener">v0.19.0 release</a>.
           </p>
           <p class="card__caveat">
             It does not pretend a model can safely guess every migration: ambiguous
             changes are flagged for a human rather than invented. Missing operation IDs
             and safe changes with no supported call-site evidence are reported as
             coverage gaps, never as successful migrations. Campaigns are an end-to-end
-            prototype, not a hosted service: customer consent is currently file-backed,
-            and there is no revocation UI. It runs parser-level syntax checks and never
+            prototype, not a hosted service: customer consent and revocation are file-backed,
+            and there is no hosted consent-management UI. It runs parser-level syntax checks and never
             executes uploaded customer code.
           </p>
         </article>
